@@ -1,0 +1,29 @@
+#!/bin/bash -eu
+#$ -cwd
+#$ -j y
+#$ -q aml-gpu.q@gpu014
+#$ -l gpu=1
+#$ -pe smp 1
+#$ -S ./env/singularity.sh
+#$ -terse
+#$ -w w
+#$ -p 1024
+#$ -sync n
+#$ -N fst-lawma
+
+# NOTE: Must be run from root of a aladdin repo
+
+# job info
+hostname && date
+echo
+echo "sge_job_id:  ${JOB_ID}"
+echo "sge_queue:   gpu.q"
+echo "user:        ${USER}"
+echo "reason:      fst-lawma"
+echo "sge_wd:      $(pwd)"
+echo
+
+cd aladdin/new_eff_challenge/sample-submissions/lit-gpt/lit-gpt
+python $@
+
+echo "Done"
